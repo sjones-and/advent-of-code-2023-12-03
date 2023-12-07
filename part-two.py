@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+from time import perf_counter_ns
 
 data = []
 max_x = 0
@@ -45,6 +46,7 @@ def get_number_value_at(location):
     return int(data[location[1]][location[0][0]:(location[0][1]+1)])
 
 def answer(input_file):
+    start = perf_counter_ns()
     global max_x, max_y, data
     with open(input_file, "r") as input:
         data = input.read().split('\n')
@@ -62,7 +64,10 @@ def answer(input_file):
         if len(adjacent_numbers) == 2:
             answer += (get_number_value_at(adjacent_numbers[0]) * get_number_value_at(adjacent_numbers[1]))
 
+    end = perf_counter_ns()
+
     print(f'The answer is: {answer}')
+    print(f'{((end-start)/1000000):.2f} milliseconds')
 
 input_file = os.path.join(os.path.dirname(__file__), "input")
 answer(input_file)
